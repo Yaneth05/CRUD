@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alumno;
+use App\Models\Carrera;
 use Illuminate\Http\Request;
 
 class AlumnoController extends Controller
@@ -12,7 +13,8 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        //
+        // habilitar la vista
+        return view('alumnos.index');//en ruta alumnos busca vista index
     }
 
     /**
@@ -20,7 +22,9 @@ class AlumnoController extends Controller
      */
     public function create()
     {
-        //
+        //habilitar la vista de alumnos.create
+        //habilitar en el select los nombre de las carreras
+        return view('alumnos.create', ['carreras' => Carrera::all()]);
     }
 
     /**
@@ -28,7 +32,9 @@ class AlumnoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //aqui se recuperan los datos del formulario
+
+        //antes de guardar, laravel tiene reglas de validacion para el formulario
     }
 
     /**
