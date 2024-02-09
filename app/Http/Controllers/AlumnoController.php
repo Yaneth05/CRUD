@@ -13,8 +13,10 @@ class AlumnoController extends Controller
      */
     public function index()
     {
+        //cargar los datos de los alumnos en objeto $alumnos de la tabla
+        $alumnos = Alumno::all();//traemos de la tabla todo lo que tenga el objeto alumno
         // habilitar la vista
-        return view('alumnos.index');//en ruta alumnos busca vista index
+        return view('alumnos.index', ['alumnos'=> $alumnos]);//en ruta alumnos busca vista index
     }
 
     /**
@@ -32,9 +34,31 @@ class AlumnoController extends Controller
      */
     public function store(Request $request)
     {
-        //aqui se recuperan los datos del formulario
+        //aqui se recuperan los datos del formulario en variable $request
 
         //antes de guardar, laravel tiene reglas de validacion para el formulario
+        $request -> validate([
+            'matricula' => 'required|unique:alumnos|max:12', //campo matricula,obligatorio, debe ser unica, 10 carracteres max
+            'nombre' => 'required|max:80',
+            'fecha' => 'required|date',
+            'telefono' => 'required',
+            'correo' => 'nullable|email',
+            'carrera' => 'required'
+        ]);
+
+        //si todos los datos son correctos entonces se guarda en la tabla de la BD
+        //para guardar se integran los datos en un objeto llamado $alumno (debido a q lasBD en laravel en por ORM)
+        $alumno = new Alumno();
+        //(nombre del campo de la tabla) -> (name del input)
+        $alumno -> matricula = $request -> input('matricula');
+        $alumno -> nombre = $request -> input('nombre');
+        $alumno -> fechaNacimiento = $request -> input('fecha');
+        $alumno -> telefono = $request -> input('telefono');
+        $alumno -> correo = $request -> input('correo');
+        $alumno -> carrera_id = $request -> input('carrera');
+        $alumno -> save();//guardar registros en la BD
+        //cuando guarde presentar un msj en la vista
+        return view("alumnos.mensaje", ['smg' => 'Alumno registrado correctamente']);
     }
 
     /**

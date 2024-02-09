@@ -6,6 +6,17 @@
 <main>
     <div class="container py-3">
         <h2>Registrar Alumno (CREATE del CRUD)</h2>
+            @if($errors->any())
+                <div class="alert alert-danger" role="alert">
+                    <!--datos incompletos-->
+                    <ul>
+                        @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    error en datos
+                </div>
+            @endif
         <!--FORMULARIO DE REGISTRO DE LOS DATOS DEL ALUMNO-->
         <form action=" {{ url('alumnos') }}" method="post">
             @csrf

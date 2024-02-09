@@ -15,7 +15,8 @@ use App\Http\Controllers\AlumnoController;
 */
 
 Route::get('/', function () {
-    return view('welcome');// es la pagina de inicio de laravel
+    //return view('welcome');// es la pagina de inicio de laravel
+    return redirect('/alumnos');// es la pagina de inicio del crud
 });
 
 //habilitar el controlador d alumno con la ruta o url localhost:xxxx/alumnos
